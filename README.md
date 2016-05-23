@@ -1,3 +1,3 @@
 # topoi
 
-Topoi is a category oriented programming language.
+Topoi is a category theory inspired programming language.
