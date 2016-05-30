@@ -1,4 +1,8 @@
 
+type id = int;
+
+type cat = | Arrow of cat cat | Id of id | Prod of cat cat;
+
 type literal = | Float of float | Int of int | String of string;
 
 type variable = {name: string};
@@ -9,6 +13,15 @@ type term =
   | Prod of (list term)
   | Comp of (list term)
   | Fun of variable variable term;
+
+type environment = {vars: list (variable, term)};
+
+let rec eval env t =>
+  switch t {
+  | Var v => List.assoc v env.vars
+  | Literal l => Literal l
+  | Prod l => Prod (List.map (eval env) l)
+  };
 
 let rec to_string t =>
   switch t {
@@ -23,3 +36,9 @@ let rec to_string t =>
   | Comp l => String.concat " " (List.map to_string l)
   | Fun v v' tm => String.concat " " ["fn", v.name, "(", v'.name, ")", "=>", to_string tm]
   };
+
+let module Test = {
+  open OUnit;
+  let t1 =
+    Comp [Prod [Var {name: "f"}, Var {name: "id"}], Prod [Var {name: "id"}, Var {name: "g"}]];
+};
