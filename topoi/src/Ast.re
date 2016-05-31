@@ -23,7 +23,7 @@ let rec eval env t =>
   | Prod l => Prod (List.map (eval env) l)
   };
 
-let rec to_string t =>
+let rec pp_term t =>
   switch t {
   | Var v => v.name
   | Literal l =>
@@ -32,9 +32,9 @@ let rec to_string t =>
     | Int i => string_of_int i
     | String s => s
     }
-  | Prod l => String.concat " " (List.map to_string l)
-  | Comp l => String.concat " " (List.map to_string l)
-  | Fun v v' tm => String.concat " " ["fn", v.name, "(", v'.name, ")", "=>", to_string tm]
+  | Prod l => String.concat " " (List.map pp_term l)
+  | Comp l => String.concat " " (List.map pp_term l)
+  | Fun v v' tm => String.concat " " ["fn", v.name, "(", v'.name, ")", "=>", pp_term tm]
   };
 
 let module Test = {

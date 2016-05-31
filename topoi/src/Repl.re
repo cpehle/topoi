@@ -1,10 +1,16 @@
 
 open Cmdliner;
 
-print_string (Ast.to_string (Ast.Literal (Ast.Float 1.0)));
+let revolt () => {
+  print_string (Ast.pp_term (Ast.Literal (Ast.Float 1.0)));
+  print_string "\n"
+};
 
-print_string "\n";
+let revolt_term = Term.(const revolt $ const ());
 
-print_string "Hello World.\n";
+switch (Term.eval (revolt_term, Term.info "revolt")) {
+| `Error _ => exit 1
+| _ => exit 0
+};
 
 let module Test = {open OUnit;};
