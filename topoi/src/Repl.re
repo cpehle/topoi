@@ -1,4 +1,8 @@
 
+open Token;
+
+open Lexer;
+
 open Cmdliner;
 
 let revolt () => {
